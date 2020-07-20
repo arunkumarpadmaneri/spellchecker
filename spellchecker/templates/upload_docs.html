@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block main %}
+<script>
+    $(document).ready(function(){
+    });
+</script>
+<style>
+</style>
+<div class="row">
+    <legend>Uploaded Docs</legend>
+	<form action="/upload" enctype="multipart/form-data"  method="post">
+		{%csrf_token%}	
+		<input type="file" name="file">
+		<input type="submit">
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block main %}
+<style>
+#signup-card{
+    width:600px;
+    margin-left:30%;
+    margin-top: 10%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+}
+.card-header{
+	text-align: center;
+	background: #32c2b2 !important;
+	color: white;
+	font-size: 22px;
+}
+#id_username,#id_email,#id_password1,#id_password2{
+    width:100%;
+}
+</style>
+    <div id="signup-card" class="card">
+    <div class="card-header">
+        Sign Up
+    </div>
+    <div  class="card-body">
+    
+    <form method="POST" class="form-group">
+	{% csrf_token %}
+    {{ form|crispy }}
+    {{ profile|crispy}}
+        <div class="form-group" style="text-align: center;">
+        <button type="submit" class="btn btn-info">Register</button>
+        </div>
+    </form>
+    </div>
+    </div>
+{% endblock %}

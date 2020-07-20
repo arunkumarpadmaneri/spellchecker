@@ -1,0 +1,63 @@
+<!doctype  html>
+<html  lang="en">
+<head>
+  <title>Text Analytics </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!-- <link  rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"  crossorigin="anonymous"> -->
+  
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+  .container{
+    margin-left:0;
+    margin-right:0;  
+  }
+  .navbar {
+    	background-color: #32c2b2 !important;
+  }
+  .primary-menu:hover{
+    color:red;
+    text-decoration: none;
+  }
+  .primary-menu{
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 5px;
+    }
+</style>
+</head>
+<body>
+  <div>
+    <nav class="navbar navbar-expand-sm navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          {%if user.is_authenticated%}
+          <li><a class="primary-menu" href="/accounts/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>
+          </i> Logout</a></li>
+          {%else%}
+            <li><a class="primary-menu" href="/accounts/signup"><i class='fa fa-user-circle'></i>
+              Sign Up</a></li>
+           <li><a class="primary-menu" href="/accounts/login"><i class="fa fa-sign-in" aria-hidden="true"></i>
+           </i>
+             Login</a></li>
+          {%endif%}
+        </ul>
+      </div>
+    </nav>     
+    <div  class="container-fluid">
+      {% block main %}
+      {% endblock %}
+    </div>
+  </div>
+</body>
+</html>

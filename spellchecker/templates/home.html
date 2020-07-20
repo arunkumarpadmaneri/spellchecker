@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block main %}
+<script>
+    $(document).ready(function(){
+        $("#check").on("click",function(){
+            var textareaval = $("#spellcheck-content-textarea").val();
+            var data = {"content":textareaval};
+            $.ajax({
+                headers:{
+                    "X-CSRFToken": "{{csrf_token}}",
+                },
+                url: "/spellcheck/content/",
+                method:"POST",
+                data:JSON.stringify(data), 
+                success: function(result){
+                    // $("#spellcheck-content-textarea").val(result);
+                    console.log(typeof(result),result);
+                    $("#err-wrd-tble tbody").html("");
+                    $.each(result,function(k,v){
+                        console.log(k,v);
+                        var tr = "<tr>"+"<td class='error-clr'><u>"+k+"</u></td>"+"<td class='success-clr'><u>"+v+"</u></td>"+"</tr>";
+                        $("#err-wrd-tble").append(tr);
+                    });
+            }});
+        });
+    });
+</script>
+<style>
+.error-clr{
+    color:red;
+}
+.success-clr{
+    color:green;
+}
+#err-container{
+    margin-top:30mm;
+}
+.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+    }
+.shadow-textarea textarea.form-control {
+    padding-left: 0.8rem;
+    }
+.card-header,.card-footer{
+    text-align: center;
+}
+.card-title{
+    font-size: 20px;
+}
+.card{
+    margin-top: 30mm;
+}
+</style>
+<div class="row">
+    <div class="col-md-10">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Spell Check-{%if is_anonymous_user%}Anonymous User{%else%} {{user.username}} {%endif%}</span>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div class="row justify-content-center form-group">
+            <textarea spellcheck="false" class="form-control z-depth-1" name="spellcheck_content"  id="spellcheck-content-textarea" rows="20" placeholder="Write something here..."></textarea>
+            </div>    
+        </div>
+        <div class="card-footer">
+            <div class="form-group" style="text-align: center;">
+                <button id="check" class="btn btn-info">check</button>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <div id="err-container"class="col-md-2">
+        <table class="table" id="err-wrd-tble" width="100%">
+            <tbody>
+                <th></th>
+                <th></th>   
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
