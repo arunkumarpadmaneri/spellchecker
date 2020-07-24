@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 import json
 from .analytics_spell_check import check_spelling
@@ -17,7 +17,7 @@ def validate_content(request):
         return JsonResponse(response)
  
 def upload_file(request):
-    if request.method == "POST":
+    if request.user.is_authenticated and request.method == "POST":
         print("files",request.FILES)
         upload_file = request.FILES['file']
         print(type(upload_file),upload_file.name,upload_file.content_type)
@@ -27,5 +27,7 @@ def upload_file(request):
         analytic_document = ADocument.objects.create(document=document, title="test")
         # return JsonResponse({'document': analytic_document.id})
         return render(request, "upload_docs.html", {})
+    elif request.user.is_authenticated and request.method == "GET":
+        return render(request, "upload_docs.html", {})        
     else:
-        return render(request, "upload_docs.html", {})
+        return redirect("/accounts/login")
