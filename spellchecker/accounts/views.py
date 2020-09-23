@@ -1,19 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm
-# from rest_framework.authentication import TokenAuthentication
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework.decorators import api_view, authentication_classes, permission_classes
-
-# from django.contrib.auth import get_user_model, logout
-# from django.core.exceptions import ImproperlyConfigured
-# from rest_framework import viewsets, status
-# from rest_framework.decorators import action
-# from rest_framework.permissions import AllowAny, IsAuthenticated
-# from rest_framework.response import Response
-# from . import serializers
-# from .utils import get_and_authenticate_user, create_user_account
-# User = get_user_model()
+from .models import User
 
 # Create your views here.
 def register(request):
@@ -44,6 +32,12 @@ def upload_docs(request):
     else:
         return redirect("/accounts/login")
 
+def users_list(request):
+    if request.user.is_authenticated:
+        userlist = User.objects.all()
+        return render(request,"registration/users_list.html",{"user_list":userlist})
+    else:
+        return redirect("/accounts/login")
 
 # class AuthViewSet(viewsets.GenericViewSet):
 #     permission_classes = [AllowAny, ]

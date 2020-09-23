@@ -11,3 +11,4 @@ class Document(models.Model):
 class AnalyticsDocument(models.Model):
 	title =  models.CharField(max_length=42)
 	document =  models.ForeignKey(Document,on_delete=models.CASCADE)
+
